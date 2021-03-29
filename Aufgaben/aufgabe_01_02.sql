@@ -6,7 +6,7 @@ CREATE TABLE Kunden (
 	plz TINYINT(5),
 	ort VARCHAR(50),
 	vorwahl VARCHAR(50),
-	telefon SMALLINT(6),
+	telefon SMALLINT(20),
 	geburtsdatum DATE,
 	ledig TINYINT(1)
 );
