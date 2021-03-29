@@ -7,16 +7,16 @@ CREATE TABLE Kunden (
 	ort VARCHAR(50),
 	vorwahl VARCHAR(50),
 	telefon SMALLINT(6),
-	geburtsdatum DATE NOT NULL,
+	geburtsdatum DATE,
 	ledig TINYINT(1)
 );
 
 CREATE TABLE Auftrag(
 	auft_nr INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-	bestelldat DATE, lieferdat DATE, CONSTRAINT CHK_date_check_1 CHECK(bestelldat > lieferdat),
-	zahlungsziel DATE, CONSTRAINT CHK_date_check_2 CHECK(zahlungsziel < bestelldat AND zahlungsziel < lieferdat),
+	bestelldat DATE, lieferdat DATE, CONSTRAINT CHK_date_check_1 CHECK(lieferdat > bestelldat),
+	zahlungsziel DATE, CONSTRAINT CHK_date_check_2 CHECK(zahlungsziel > bestelldat AND zahlungsziel > lieferdat),
 	zahleingang TINYINT(1),
-	mahnung ENUM('0','1','2','3') DEFAULT '0'
+	mahnung ENUM('0','1','2','3') NOT NULL DEFAULT '0'
 );
 
 CREATE TABLE Artikel(
@@ -37,8 +37,8 @@ CREATE TABLE Kategorie(
 );
 
 ALTER TABLE Kunden
- ADD rabatt FLOAT DEFAULT '0.03',
- letzter DATETIME AUTO_INCREMENT;
+ ADD rabatt FLOAT NOT NULL DEFAULT '0.03',
+ letzter TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
  
 ALTER TABLE Kunden
  CHANGE strasse VARCHAR(35),
